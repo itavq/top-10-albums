@@ -10,4 +10,4 @@ I think data and data vis are cool, but also wanted to explore how data relates 
 
 Built with JavaScript, D3 and the last.fm API. Plus my old friend, Sass and new pals, Q, Gulp and Browserify.
 
-<!-- More details here. -->
+A more details on the build in [this blog post.](http://brennaobrien.com/blog/2014/12/d3-last-fm-top-10-list.html)

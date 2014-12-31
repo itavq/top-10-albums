@@ -8,7 +8,7 @@ function barChart(){
       thumbWidth = 25,
       chartMargin = {
         top: 20,
-        left: 70,
+        left: 50,
         bottom: 70,
         right: 20
       };

@@ -2,12 +2,14 @@ var d3 = require('d3'),
     Q = require('q'),
     topAlbums = require('./topAlbums'),
     addRank = require('./addRank'),
-    barChart = require('./barChart');
+    barChart = require('./barChart'),
+    smoothScroll = require('smooth-scroll');
 
 var myChart = barChart(),
     loader = d3.select('.loader'),
     btnOrderRank = document.getElementById('orderByRank'),
     btnOrderCount = document.getElementById('orderByPlayCount'),
+    yearFilter = 2014,
     favouriteAlbums = [
       "Our Love", //Caribou
       "You're Dead!", //Flying Lotus
@@ -21,12 +23,21 @@ var myChart = barChart(),
       "LP1" //FKA Twigs
     ];
 
+//smooth scroll anchor links
+smoothScroll.init();
 
+//request top album data
 topAlbums().done(function(albums){
 
-  //reduce data to only 2014 albums
+  //change up the UI once data is loaded
+  loader.attr('style', 'display: none;');
+  btnOrderRank.setAttribute('style', 'display: inline-block;');
+  btnOrderCount.setAttribute('style', 'display: inline-block;');
+
+  /* massage data a bit */
+  //reduce data to only albums matching our year filter
   albums = albums.filter(function(album){
-    return Number(album.releaseYear) === 2014;
+    return Number(album.releaseYear) === yearFilter;
   });
 
   //actively remove a known bad data point
@@ -38,17 +49,12 @@ topAlbums().done(function(albums){
   //merge in personal ranking data
   var rankedAlbums = addRank(albums, favouriteAlbums);
 
-  //change up UI
-  loader.attr('style', 'display: none;');
-  btnOrderRank.setAttribute('style', 'display: inline-block;');
-  btnOrderCount.setAttribute('style', 'display: inline-block;');
-
   //create our chart
   d3.select('#topAlbums')
     .datum(rankedAlbums)
     .call(myChart);
 
-  //switch controls
+  //chart controls
   btnOrderRank.addEventListener('click', function(){
     myChart.orderByRank();
     btnOrderCount.setAttribute('class', '');

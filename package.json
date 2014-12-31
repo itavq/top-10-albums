@@ -24,6 +24,7 @@
     "d3": "~3.5.2",
     "q": "~1.1.2",
     "gulp-plumber": "~0.6.6",
-    "gulp-svgmin": "~1.0.0"
+    "gulp-svgmin": "~1.0.0",
+    "smooth-scroll": "git://github.com/cferdinandi/smooth-scroll"
   }
 }

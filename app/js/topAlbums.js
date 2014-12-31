@@ -11,7 +11,8 @@ var baseReqURL = apiRoot + '?format=json&api_key=' + apiKey + '&user=' + lastfmU
 
 function getAlbums(){
   var deferred = Q.defer(),
-      topAlbumsURL = baseReqURL + '&method=user.getTopAlbums' + '&period=12month';
+      // topAlbumsURL = baseReqURL + '&method=user.getTopAlbums' + '&period=12month';
+      topAlbumsURL = 'assets/playcounts2014.json';
 
   //request top albums
   d3.json(topAlbumsURL, function(error, data){

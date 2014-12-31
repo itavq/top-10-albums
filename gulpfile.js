@@ -74,11 +74,6 @@ gulp.task('scripts', function(){
     .pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('images', function(){
-  return gulp.src('app/img/**/*.*')
-    .pipe(gulp.dest('dist/img/'));
-});
-
 gulp.task('html', function(){
   return gulp.src('app/*.html')
     .pipe(preprocess())
@@ -86,9 +81,10 @@ gulp.task('html', function(){
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('fonts', function(){
-  return gulp.src('app/css/fonts/**/*.*')
-    .pipe(gulp.dest('dist/css/fonts/'));
+//misc assests that need to be copied over
+gulp.task('assets', function(){
+  return gulp.src('app/assets/**/*.*')
+    .pipe(gulp.dest('dist/assets/'));
 });
 
 gulp.task('browser-sync', function(){
@@ -113,12 +109,12 @@ gulp.task('clean', function(cb) {
 
 //production build task (generates links to minified files)
 gulp.task('build', ['clean'], function(){
-  gulp.start('styles', 'jshint', 'scripts', 'images', 'fonts', 'html');
+  gulp.start('styles', 'jshint', 'scripts', 'assets', 'html');
   return gulp.src('app/*.html')
     .pipe(preprocess({context: { NODE_ENV: 'production', DEBUG: true}}))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('default', ['clean'], function(){
-  gulp.start('browser-sync', 'styles', 'jshint', 'scripts', 'fonts', 'images', 'html', 'watch');
+  gulp.start('browser-sync', 'styles', 'jshint', 'scripts', 'assets', 'html', 'watch');
 });

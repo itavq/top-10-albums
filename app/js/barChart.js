@@ -117,15 +117,6 @@ function barChart(){
       svg.selectAll('.y.axis .tick text')
         .attr('dy', '0');
 
-      // svg.append('text')
-      //   .attr('class','x axisLabel')
-      //   .attr('x', 0)
-      //   .attr('y', height/2)
-      //   .attr('dx', '-3em')
-      //   .attr('text-anchor', 'middle')
-      //   // .attr('transform', 'rotate(90)')
-      //   .text('Rank');
-
       svg.append('text')
         .attr('class','axisLabel')
         .attr('y', height)
@@ -143,6 +134,8 @@ function barChart(){
     .attr('transform', function(d){
       return 'translate(0,' + (d.rank - 1) * (barHeight + barMargin) + ')';
     });
+
+    return chart;
   };
 
   chart.orderByPlayCount = function() {
@@ -152,6 +145,8 @@ function barChart(){
     .attr('transform', function(d, i){
       return 'translate(0,' + i * (barHeight + barMargin) + ')';
     });
+
+    return chart;
   };
 
   return chart;

@@ -1,0 +1,155 @@
+@import "normalize";
+@import "fonts";
+
+$legendFav: #F08377;
+$legendCount: #57C6CA;
+$linkColor: darken($legendCount, 10);
+$contentLeftGutter: 6.5%;
+
+body {
+  font-family: hero, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+}
+
+.container {
+  max-width: 1000px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+
+h1 {
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 50px;
+  margin-left: $contentLeftGutter;
+}
+
+h2 {
+  text-transform: uppercase;
+}
+
+p {
+  line-height: 1.4;
+  max-width: 750px;
+}
+
+a {
+  color: $linkColor;
+  text-decoration: none;
+  &:hover {text-decoration: underline;}
+}
+
+.explain {
+  margin-left: $contentLeftGutter;
+}
+
+.loader {
+
+  img {
+    width: 60px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+}
+
+.controls {
+  margin-left: $contentLeftGutter;
+}
+
+.controls {
+
+  button {
+    display: none;
+  }
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  button, a {
+    background: none;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    line-height: 25px;
+
+    &#orderByRank {
+      border: solid 2px $legendFav;
+      .icon {
+        color: $legendFav;
+      }
+      &:hover,
+      &.inactive{
+        background: lighten($legendFav, 20);
+      }
+    }
+
+    &#orderByPlayCount {
+      border: solid 2px $legendCount;
+      .icon {
+        color: $legendCount;
+      }
+      &:hover,
+      &.inactive{
+        background: lighten($legendCount, 25);
+      }
+    }
+
+    &.more {
+      border: solid 2px goldenrod;
+      color: goldenrod;
+      &:hover {
+        background: lighten(goldenrod, 40);
+      }
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &.inactive {
+      cursor: default;
+      opacity: 0.4;
+    }
+  }
+  .icon {
+    font-size: 25px;
+    vertical-align: middle;
+  }
+}
+
+.albumChart {
+
+  .tick line {
+    stroke: #333;
+  }
+
+  .y.axis .tick text {
+    font-size: 30px;
+    font-weight: 300;
+  }
+
+  .axisLabel {
+    text-transform: uppercase;
+
+    &.x {
+      // vertical text
+      writing-mode: tb;
+      letter-spacing: -0.1em;
+      glyph-orientation-vertical: 0;
+    }
+  }
+
+  .album text {
+    fill: #333;
+  }
+
+  .albumName {
+    font-style: italic;
+  }
+}

@@ -91,6 +91,11 @@ gulp.task('fonts', function(){
     .pipe(gulp.dest('dist/css/fonts/'));
 });
 
+gulp.task('data-files', function(){
+  return gulp.src('app/playcounts2014.json')
+    .pipe(gulp.dest('dist/'));
+});
+
 gulp.task('browser-sync', function(){
   browsersync({
     startPath: '/dist/',
@@ -113,12 +118,12 @@ gulp.task('clean', function(cb) {
 
 //production build task (generates links to minified files)
 gulp.task('build', ['clean'], function(){
-  gulp.start('styles', 'jshint', 'scripts', 'images', 'fonts', 'html');
+  gulp.start('styles', 'jshint', 'scripts', 'images', 'fonts', 'data-files', 'html');
   return gulp.src('app/*.html')
     .pipe(preprocess({context: { NODE_ENV: 'production', DEBUG: true}}))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('default', ['clean'], function(){
-  gulp.start('browser-sync', 'styles', 'jshint', 'scripts', 'fonts', 'images', 'html', 'watch');
+  gulp.start('browser-sync', 'styles', 'jshint', 'scripts', 'fonts', 'data-files', 'images', 'html', 'watch');
 });

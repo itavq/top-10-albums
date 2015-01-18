@@ -11,7 +11,7 @@ var baseReqURL = apiRoot + '?format=json&api_key=' + apiKey + '&user=' + lastfmU
 
 function getAlbums(){
   var deferred = Q.defer(),
-      topAlbumsURL = baseReqURL + '&method=user.getTopAlbums' + '&period=12month';
+      topAlbumsURL = 'playcounts2014.json';
 
   //request top albums
   d3.json(topAlbumsURL, function(error, data){
@@ -38,7 +38,7 @@ function addReleaseYear(album){
 
   d3.json(albumDetailsURL, function(error, data){
     if (error || data.error){
-      deferred.reject(new Error(error));
+      deferred.reject(new Error(data.error + album.name));
     } else {
       var releaseYear = new Date(data.album.releasedate).getFullYear();
       album.releaseYear = releaseYear;

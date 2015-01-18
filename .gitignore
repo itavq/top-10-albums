@@ -3,3 +3,4 @@ node_modules
 app/top10.md
 *.sublime-project
 *.sublime-workspace
+SRC/

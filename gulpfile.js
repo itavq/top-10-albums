@@ -1,4 +1,4 @@
-var gulp = require('gulp'),
+const gulp = require('gulp'),
     browserify = require('browserify'),
     transform = require('vinyl-transform'),
     del = require('del'),
@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
-    minifycss = require('gulp-minify-css')
+    minifycss = require('gulp-minify-css'),
     autoprefix = require('gulp-autoprefixer'),
     watch = require('gulp-watch'),
     browsersync = require('browser-sync'),
@@ -27,11 +27,11 @@ gulp.task('styles', function(){
     }))
     .pipe(sourcemaps.write())
     .pipe(autoprefix('last 2 versions'))
-    .pipe(gulp.dest('dist/css/'))
-    .pipe(browsersync.reload({stream:true}))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(minifycss())
     .pipe(gulp.dest('dist/css/'));
+    // .pipe(browsersync.reload({stream:true}))
+    // .pipe(rename({suffix: '.min'}))
+    // .pipe(minifycss())
+    // .pipe(gulp.dest('dist/css/'));
 });
 
 gulp.task('jshint', function(){

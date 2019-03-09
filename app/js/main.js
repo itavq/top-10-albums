@@ -24,7 +24,7 @@ var myChart = barChart(),
     ];
 
 //smooth scroll anchor links
-smoothScroll.init();
+// smoothScroll.init();
 
 //request top album data
 topAlbums().done(function(albums){

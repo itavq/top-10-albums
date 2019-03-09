@@ -25,6 +25,40 @@ function getAlbums(){
   return deferred.promise;
 }
 
+window.MOCK = function() { return {
+"artist": {
+    "url": "https://www.last.fm/music/George+Harrison",
+        "name": "George Harrison",
+        "mbid": "42a8f507-8412-4611-854f-926571049fa0"
+},
+"@attr": {
+    "rank": "7"
+},
+"image": [
+    {
+        "size": "small",
+        "#text": "https://lastfm-img2.akamaized.net/i/u/34s/312f904538674a70486f1e782d0d053a.jpg"
+    },
+    {
+        "size": "medium",
+        "#text": "https://lastfm-img2.akamaized.net/i/u/64s/312f904538674a70486f1e782d0d053a.jpg"
+    },
+    {
+        "size": "large",
+        "#text": "https://lastfm-img2.akamaized.net/i/u/174s/312f904538674a70486f1e782d0d053a.jpg"
+    },
+    {
+        "size": "extralarge",
+        "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/312f904538674a70486f1e782d0d053a.jpg"
+    }
+],
+    "playcount": "137",
+    "url": "https://www.last.fm/music/George+Harrison/All+Things+Must+Pass+(Remastered)",
+    "name": "All Things Must Pass (Remastered)",
+    "mbid": "",
+    "releaseYear": null
+};};
+
 function addReleaseYear(album){
 
   var deferred = Q.defer(),
@@ -38,11 +72,18 @@ function addReleaseYear(album){
 
   d3.json(albumDetailsURL, function(error, data){
     if (error || data.error){
-      deferred.reject(new Error(error));
+      // deferred.reject(new Error(error));
+        console.warn("could not get it..." + error);
+        // deferred.reject("could not...");
+        deferred.resolve(MOCK());
     } else {
-      var releaseYear = new Date(data.album.releasedate).getFullYear();
-      album.releaseYear = releaseYear;
-      deferred.resolve(album);
+        if (!data.album.wiki) {
+            album.releaseYear = 2014;
+            deferred.resolve(album);
+        } else {
+            album.releaseYear = new Date(data.album.wiki.published).getFullYear();
+            deferred.resolve(album);
+        }
     }
   });
 

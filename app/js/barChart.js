@@ -128,13 +128,18 @@ function barChart(){
   }
 
   chart.orderByRank = function() {
-    d3.selectAll('.album')
-    .transition(700)
-    .attr('fill', 'url(#warmGradient)')
-    .attr('transform', function(d){
-      return 'translate(0,' + (d.rank - 1) * (barHeight + barMargin) + ')';
-    });
-
+            // .selectAll('.album')
+    // .transition(700)
+    // .attr('fill', 'url(#warmGradient)')
+    // .attr('transform', function(d){
+    //   return 'translate(0,' + (d.rank - 1) * (barHeight + barMargin) + ')';
+    // });
+      d3.selectAll('.album')
+          .transition(700)
+          .attr('fill', 'url(#coolGradient)')
+          .attr('transform', function(d, i){
+              return 'translate(0,' + (4 - i) * (25 + 35) + ')';
+          });
     return chart;
   };
 

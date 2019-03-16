@@ -31,15 +31,15 @@ function barChart(){
         .append('g')
         .attr('transform', 'translate(' + chartMargin.left + ',' + chartMargin.top + ')');
 
-      var x = d3.scale.linear()
+      var x = d3.scaleLinear()
         .domain([0, d3.max(playCounts)])
         .range([0, width]);
 
       window.itz_x = x;
 
-      var y = d3.scale.ordinal()
+      var y = d3.scaleBand()
         .domain(d3.range(1, numBars + 1))
-        .rangeBands([0, height]);
+        .range([0, height]);
 
       //group bars inside child svg to have overflow hidden effect
       var bars = svg.append('svg')
@@ -94,15 +94,13 @@ function barChart(){
 
 
       //axes!
-      var xAxis = d3.svg.axis()
+      var xAxis = d3.axisBottom()
           .scale(x)
-          .orient('bottom')
           .tickSize(5, 1)
           .tickPadding(5);
 
-      var yAxis = d3.svg.axis()
+      var yAxis = d3.axisLeft()
           .scale(y)
-          .orient('left')
           .tickSize(0, 1)
           .tickPadding(15);
 
@@ -148,7 +146,8 @@ function barChart(){
 
       function doStep() {
           d3.selectAll(".album>rect")
-              .transition(700)
+              .transition()
+              .duration(2000)
               .attr("width", function (d, i) {
                   // console.log(d.name + " " + itz_x(d.d));
                   return itz_x(stateMachine.getVal(i));
@@ -156,6 +155,7 @@ function barChart(){
 
           d3.selectAll('.album')
               .transition()
+              .duration(2000)
               .attr('transform', function (d, i) {
                   console.log(d.name + " " + d.r);
                   var rank = stateMachine.getRank(i);
@@ -165,14 +165,20 @@ function barChart(){
           stateMachine.step();
       }
 
-      setInterval(doStep,2000);
+      var interval = setInterval(function() {
+          if (!stateMachine.exceeded()) {
+              doStep();
+          } else {
+              clearInterval(interval);
+          }
+      },3000);
 
       return chart;
   };
 
   chart.orderByPlayCount = function() {
     d3.selectAll('.album')
-    .transition(700)
+    .transition().duration(1500)
     .attr('fill', 'url(#coolGradient)')
     .attr('transform', function(d, i){
       return 'translate(0,' + i * (barHeight + barMargin) + ')';

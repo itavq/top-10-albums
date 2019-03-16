@@ -1,4 +1,5 @@
-var d3 = require('d3');
+var d3 = require('d3'),
+    stateMachine = require('./stateMachine');
 
 function barChart(){
   var width = 1000,
@@ -18,7 +19,7 @@ function barChart(){
     selection.each(function(data){
 
       var playCounts = data.map(function(d){
-        return Number(d.playcount);
+        return Number(d.d);
       });
 
       var height = (barHeight + barMargin) * numBars,
@@ -33,6 +34,8 @@ function barChart(){
       var x = d3.scale.linear()
         .domain([0, d3.max(playCounts)])
         .range([0, width]);
+
+      window.itz_x = x;
 
       var y = d3.scale.ordinal()
         .domain(d3.range(1, numBars + 1))
@@ -54,7 +57,7 @@ function barChart(){
 
       bar.append('rect')
         .attr('width', function(d){
-          return x(d.playcount);
+          return x(d.d);
         })
         .attr('height', barHeight)
         // .attr('transform', 'translate(' + thumbWidth + ',' + ((barHeight + barMargin)/2) + ')');
@@ -65,12 +68,12 @@ function barChart(){
         .attr('height', thumbWidth)
         .attr('y', barMargin/4)
         .attr('xlink:href', function(d){
-          return d.image[1]['#text'];
+          return d.image[0]['#text'];
         });
 
       var barText = bar.append('text')
         .attr('x', function(d){
-          return x(d.playcount);
+          return x(d.d);
         })
         .attr('y', barMargin/4 + barHeight)
         .attr('dy', '1em')
@@ -128,19 +131,43 @@ function barChart(){
   }
 
   chart.orderByRank = function() {
-            // .selectAll('.album')
-    // .transition(700)
-    // .attr('fill', 'url(#warmGradient)')
-    // .attr('transform', function(d){
-    //   return 'translate(0,' + (d.rank - 1) * (barHeight + barMargin) + ')';
-    // });
       d3.selectAll('.album')
           .transition(700)
           .attr('fill', 'url(#coolGradient)')
           .attr('transform', function(d, i){
-              return 'translate(0,' + (4 - i) * (25 + 35) + ')';
+              return 'translate(0,' + (3 - i) * (25 + 35) + ')';
           });
+          // .attr('width', function(d) {
+          //     return window.itz_x(d.playcount);
+          // });
     return chart;
+  };
+
+  chart.test = function () {
+      window.d3 = d3;
+
+      function doStep() {
+          d3.selectAll(".album>rect")
+              .transition(700)
+              .attr("width", function (d, i) {
+                  // console.log(d.name + " " + itz_x(d.d));
+                  return itz_x(stateMachine.getVal(i));
+              });
+
+          d3.selectAll('.album')
+              .transition()
+              .attr('transform', function (d, i) {
+                  console.log(d.name + " " + d.r);
+                  var rank = stateMachine.getRank(i);
+                  return 'translate(0,' + rank * (25 + 35) + ')';
+              });
+
+          stateMachine.step();
+      }
+
+      setInterval(doStep,2000);
+
+      return chart;
   };
 
   chart.orderByPlayCount = function() {

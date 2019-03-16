@@ -3,55 +3,31 @@ var d3 = require('d3'),
     topAlbums = require('./topAlbums'),
     addRank = require('./addRank'),
     barChart = require('./barChart'),
-    smoothScroll = require('smooth-scroll');
+    data = require('./staticData');
 
 var myChart = barChart(),
     loader = d3.select('.loader'),
     btnOrderRank = document.getElementById('orderByRank'),
     btnOrderCount = document.getElementById('orderByPlayCount'),
-    yearFilter = 2014,
-    favouriteAlbums = [
-      "Our Love", //Caribou
-      "You're Dead!", //Flying Lotus
-      "St. Vincent", //St. Vincent
-      "Oxymoron", //ScHoolboy Q
-      "They Want My Soul", //Spoon
-      "Do It Again", //Röyksopp & Robyn
-      "Wonder Where We Land", //SBTRKT
-      "Salad Days", //Mac DeMarco
-      "Here and Nowhere Else", //Cloud Nothings
-      "LP1" //FKA Twigs
-    ];
+    btnTest = document.getElementById('test');
 
 //smooth scroll anchor links
 // smoothScroll.init();
 
 //request top album data
-topAlbums().done(function(albums){
+// topAlbums().done(function(albums){
 
   //change up the UI once data is loaded
   loader.attr('style', 'display: none;');
   btnOrderRank.setAttribute('style', 'display: inline-block;');
   btnOrderCount.setAttribute('style', 'display: inline-block;');
+  btnTest.setAttribute('style', 'display: inline-block;');
 
-  /* massage data a bit */
-  //reduce data to only albums matching our year filter
-  albums = albums.filter(function(album){
-    return Number(album.releaseYear) === yearFilter;
-  });
 
-  //actively remove a known bad data point
-  //(release year for "Because the Internet" is wrong!!)
-  albums = albums.filter(function(album){
-    return album.name !== 'Because the Internet';
-  });
-
-  //merge in personal ranking data
-  var rankedAlbums = addRank(albums, favouriteAlbums);
-
+(function doShow(){
   //create our chart
   d3.select('#topAlbums')
-    .datum(rankedAlbums)
+    .datum(data.stats)
     .call(myChart);
 
   //chart controls
@@ -67,6 +43,11 @@ topAlbums().done(function(albums){
     btnOrderCount.setAttribute('class', 'inactive');
   });
 
+    btnTest.addEventListener('click', function(){
+        myChart.test();
+        btnOrderCount.setAttribute('class', '');
+        btnOrderRank.setAttribute('class', 'inactive');
+    });
 
-});
+})();
 

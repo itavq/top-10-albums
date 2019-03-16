@@ -3,7 +3,7 @@
   "name": "app-starter",
   "version": "0.0.0",
   "description": "",
-  "author": "Brenna O'Brien",
+  "author": "itaq",
   "license": "BSD-2-Clause",
   "devDependencies": {
     "browser-sync": "~1.8.2",
@@ -24,7 +24,6 @@
     "gulp-uglify": "~1.0.2",
     "gulp-watch": "~3.0.0",
     "q": "~1.1.2",
-    "smooth-scroll": "~0.1.0",
     "vinyl-transform": "~1.0.0"
   },
   "dependencies": {

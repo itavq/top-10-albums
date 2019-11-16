@@ -3,7 +3,7 @@ var d3 = require('d3'),
     topAlbums = require('./topAlbums'),
     addRank = require('./addRank'),
     barChart = require('./barChart'),
-    data = require('./staticData');
+    data = require('./nbaStaticData');
 
 var myChart = barChart(),
     loader = d3.select('.loader'),

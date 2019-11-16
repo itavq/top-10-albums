@@ -4,7 +4,7 @@ var d3 = require('d3'),
 function barChart(){
   var width = 1000,
       barHeight = 25,
-      numBars = 10,
+      numBars = 20,
       barMargin = 35,
       thumbWidth = 25,
       chartMargin = {
@@ -85,13 +85,26 @@ function barChart(){
           return d.name;
         });
 
-      barText.append('tspan')
-        .attr('class', 'artist')
-        .attr('dx', 10)
-        .text(function(d){
-          return d.artist.name;
-        });
+      // barText.append('tspan')
+      //   .attr('class', 'artist')
+      //   .attr('dx', 10)
+      //   .text(function(d){
+      //     return d.artist.name;
+      //   });
 
+        var barVal = bar.append('text')
+            .attr('x', function(d){
+                return x(d.d) - 20;
+            })
+            // .attr('y', barMargin/4 + barHeight)
+            .attr('dy', '2em');
+            //.attr('x', 70);
+
+        barVal.append('tspan')
+            .attr('class', 'albumName')
+            .text(function(d){
+                return d.d;
+            });
 
       //axes!
       var xAxis = d3.axisBottom()
@@ -157,7 +170,6 @@ function barChart(){
               .transition()
               .duration(2000)
               .attr('transform', function (d, i) {
-                  console.log(d.name + " " + d.r);
                   var rank = stateMachine.getRank(i);
                   return 'translate(0,' + rank * (25 + 35) + ')';
               });

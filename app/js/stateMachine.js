@@ -1,4 +1,4 @@
-var data = require("./staticData");
+var data = require("./nbaStaticData");
 
 var counter = 0;
 

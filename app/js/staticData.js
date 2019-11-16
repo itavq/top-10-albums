@@ -1,4 +1,4 @@
-data =  {
+____data =  {
     stats : [
         {
             "artist": {            "name": "Cymande"        },
@@ -34,4 +34,4 @@ data =  {
     ]
 };
 
-module.exports = data;
+module.exports = ____data;
